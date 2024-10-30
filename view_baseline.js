@@ -241,18 +241,48 @@ function open_advanced_dialog(file_path) {
 
     // permissions list for permissions tab:
     let users = get_file_users(file_obj)
-    for(let u in users) {
-        let grouped_perms = get_grouped_permissions(file_obj, u)
-        for(let ace_type in grouped_perms) {
-            for(let perm in grouped_perms[ace_type]) {
-                $('#adv_perm_table').append(`<tr id="adv_perm_${file_obj.filename}__${u}_${ace_type}_${perm}">
-                    <td id="adv_perm_${file_obj.filename}__${u}_${ace_type}_${perm}_type">${ace_type}</td>
-                    <td id="adv_perm_${file_obj.filename}__${u}_${ace_type}_${perm}_name">${u}</td>
-                    <td id="adv_perm_${file_obj.filename}__${u}_${ace_type}_${perm}_permission">${perm}</td>
-                    <td id="adv_perm_${file_obj.filename}__${u}_${ace_type}_${perm}_type">${grouped_perms[ace_type][perm].inherited?"Parent Object":"(not inherited)"}</td>
-                </tr>`)
+    let headerRow = `<tr>
+    <th>User</th>`;
+
+    let allPermissions = new Set();
+    for (let u in users) {
+        let grouped_perms = get_grouped_permissions(file_obj, u);
+        for (let ace_type in grouped_perms) {
+            for (let perm in grouped_perms[ace_type]) {
+                allPermissions.add(perm);
             }
         }
+    }
+
+    allPermissions.forEach(perm => {
+        if(perm == 'Other') {
+            perm = 'Special_permissions'
+        }
+        headerRow += `<th>${perm}</th>`;
+    });
+    headerRow += `</tr>`;
+
+    $('#adv_perm_table').append(headerRow);
+
+    for (let u in users) {
+        let userRow = `<tr>
+            <td>${u}</td>`;
+
+        let grouped_perms = get_grouped_permissions(file_obj, u);
+        allPermissions.forEach(perm => {
+            let isChecked = false;
+            
+            for (let ace_type in grouped_perms) {
+                if (grouped_perms[ace_type][perm]) {
+                    isChecked = (ace_type === "allow");
+                    break;
+                }
+            }
+            userRow += `<td><input type="checkbox" ${isChecked ? 'checked' : ''} disabled></td>`;
+        });
+
+        userRow += `</tr>`;
+        $('#adv_perm_table').append(userRow);
     }
 
     // user list for owner tab:
@@ -318,7 +348,7 @@ $( "#advtabs" ).tabs({
 });
 let adv_contents = $(`#advdialog`).dialog({
     position: { my: "top", at: "top", of: $('#html-loc') },
-    width: 700,
+    width: 820,
     height: 450,
     modal: true,
     autoOpen: false,
