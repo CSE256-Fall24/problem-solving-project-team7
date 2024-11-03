@@ -465,7 +465,7 @@ all_users_selectlist.append(all_user_elements)
 // Make the dialog:
 user_select_dialog = define_new_dialog('user_select_dialog2', 'Select User', {
     buttons: {
-        Cancel: {
+        Cancel: { 
             text: "Cancel",
             id: "user_select_cancel_button",
             click: function() {
