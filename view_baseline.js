@@ -10,8 +10,13 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
     height: 500,
     width: 400,
     buttons: {
+<<<<<<< HEAD
         OK:{
             text: "Advanced change",
+=======
+        Apply:{
+            text: "Apply",
+>>>>>>> 7ead15ce4090cb4eb18304828f64c38c01ffa791
             id: "perm-dialog-ok-button",
             click: function() {
                 $( this ).dialog( "close" );
