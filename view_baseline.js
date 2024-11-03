@@ -11,14 +11,14 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
     width: 400,
     buttons: {
         OK:{
-            text: "OK",
+            text: "Advanced change",
             id: "perm-dialog-ok-button",
             click: function() {
                 $( this ).dialog( "close" );
             }
         },
         Advanced: {
-            text: "Advanced",
+            text: "Apply",
             id: "perm-dialog-advanced-button",
             click: function() {
                 open_advanced_dialog(perm_dialog.attr('filepath'))
