@@ -133,13 +133,12 @@
                             <button id="adv_perm_edit" class="ui-button ui-widget ui-corner-all">Edit...</button>
                             <div id="adv_perm_inheritance_div">
                                 <input type="checkbox" id="adv_perm_inheritance" name="inherit">
-                                <label for="adv_perm_inheritance" id="adv_perm_inheritance_label">The users will inherite the permissions the parent file </label> 
+                                <label for="adv_perm_inheritance" id="adv_perm_inheritance_label">Change this file's permissions same to its folder </label> 
                             </div>
                             <div id="adv_perm_replace_child_div">
                                 <input type="checkbox" id="adv_perm_replace_child_permissions" name="replace_child">
                                 <label for="adv_perm_replace_child_permissions"
-                                    id="adv_perm_replace_child_permissions_label">Replace all child object permissions
-                                    with inheritable permissions from this object</label>
+                                    id="adv_perm_replace_child_permissions_label">Set all files in this folder to inherit the same permissions as the folder</label>
                             </div>
                         </div>
                         <div id="adv_owner_tab">
@@ -218,6 +217,72 @@
     </script>
     <script id="script-added-for-256" src="core/tracker.js">
     </script>
+
+    <script>
+        $("#permdialog_grouped_permissions_Full_control_name").hover(
+            function() {
+                // Create the tooltip element
+                let tooltip = $('<div id="tooltip">This have the ability to change permissions</div>');
+                tooltip.css({
+                    position: 'absolute',
+                    padding: '5px',
+                    backgroundColor: '#EDECEC',
+                    color: '#333',
+                    borderRadius: '3px',
+                    fontSize: '12px',
+                    zIndex: 1000
+                });
+                
+                // Append tooltip to the body
+                $("body").append(tooltip);
+
+                // Position the tooltip above the hovered element
+                let offset = $(this).offset();
+                tooltip.css({
+                    top: offset.top - tooltip.outerHeight() - 10,  // Adjust the tooltip to appear above the element
+                    left: offset.left
+                });
+            },
+            function() {
+                // Remove the tooltip when the mouse leaves
+                $("#tooltip").remove();
+            }
+        ); // hovering tooltip for task 3
+
+    </script> 
+    <script>
+                $("#perm-dialog-advanced-button").hover(
+            function() {
+                // Create the tooltip element
+                let tooltip = $('<div id="tooltip">About changing inherited properties</div>');
+                tooltip.css({
+                    position: 'absolute',
+                    padding: '5px',
+                    backgroundColor: '#EDECEC',
+                    color: '#333',
+                    borderRadius: '3px',
+                    fontSize: '12px',
+                    zIndex: 1000
+                });
+                
+                // Append tooltip to the body
+                $("body").append(tooltip);
+
+                // Position the tooltip above the hovered element
+                let offset = $(this).offset();
+                tooltip.css({
+                    top: offset.top - tooltip.outerHeight() - 10,  // Adjust the tooltip to appear above the element
+                    left: offset.left
+                });
+            },
+            function() {
+                // Remove the tooltip when the mouse leaves
+                $("#tooltip").remove();
+            }
+        ); // hovering tooltip for task 3
+
+    </script>
+
     
 </body>
 <body>
