@@ -442,3 +442,5 @@ function validate_and_get_logs() {
         console.log(JSON.stringify(userData));
     }
 }
+
+

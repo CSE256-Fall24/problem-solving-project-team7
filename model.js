@@ -218,3 +218,26 @@ function remove_all_perms_for_user(file, user) {
   file.acl = file.acl.filter(ace => ace.who !==user)
   emitState()
 }
+
+// Copies permissions from an existing user to a new user in the given file's ACL
+function copy_permissions_from_existing_user(file, new_user) {
+  let existing_employee_ace = file.acl.find(ace => ace.is_allow_ace && ace.who !== new_user); 
+
+  if (existing_employee_ace) {
+      let permissions_to_copy = file.acl.filter(ace => ace.who === existing_employee_ace.who && ace.is_allow_ace);
+      for (let ace of permissions_to_copy) {
+          add_permissons(file, new_user, [ace.permission], true);
+      }
+  }
+}
+
+// Function to add employee4 to the presentation_documents folder with the same permissions as other employees
+function add_user_to_presentation_documents() {
+  let folder = path_to_file['presentation_documents'];
+  let new_user = 'employee4';
+
+  copy_permissions_from_existing_user(folder, new_user);
+}
+
+// Call this function when employee4 joins the team
+add_user_to_presentation_documents();
