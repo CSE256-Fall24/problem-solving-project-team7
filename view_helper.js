@@ -211,7 +211,7 @@ function define_grouped_permission_checkboxes(id_prefix, which_groups = null) {
     let group_table = $(`
     <table id="${id_prefix}" class="ui-widget-content" width="100%">
         <tr id="${id_prefix}_header">
-            <th id="${id_prefix}_header_p" width="99%">Permissions for <span id="${id_prefix}_header_username"></span>
+            <th id="${id_prefix}_header_p" width="99%">Permissions For <span id="${id_prefix}_header_username"></span>
             </th>
             <th id="${id_prefix}_header_allow">Allow</th>
             <th id="${id_prefix}_header_deny">Deny</th>
@@ -473,7 +473,7 @@ user_select_dialog = define_new_dialog('user_select_dialog2', 'Select User', {
             },
         },
         APPLY: {
-            text: "APPLY",
+            text: "Confirm Changes",
             id: "user_select_ok_button",
             click: function() {
                 // When "OK" is clicked, we want to populate some other element with the selected user name 

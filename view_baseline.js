@@ -19,10 +19,21 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
             }
         },
         Apply: {
-            text: "Apply",
+            text: "Confirm Changes",
             id: "perm-dialog-ok-button",
             click: function() {
                 $( this ).dialog( "close" );
+            }
+        }
+        ,Permissions: {
+            text: "View All Current Permissions",
+            id: "perm-dialog-view-button",
+            click: function() {
+                $("#advtabs").tabs("option", "active", 2); 
+                $("#advdialog").dialog('open')
+                open_advanced_dialog(perm_dialog.attr('filepath'))
+
+
             }
         }
     }
@@ -30,11 +41,15 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
 
 // Make the initial "Object Name:" text:
 // If you pass in valid HTML to $(), it will *create* elements instead of selecting them. (You still have to append them, though)
+
+
 obj_name_div = $('<div id="permdialog_objname" class="section">Object Name: <span id="permdialog_objname_namespan"></span> </div>')
 
-deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text">Selet deny to restrict selected user permission only in this file </div>')
+deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text">Select deny to restrict selected user permission only in this file </div>')
 //Make the div with the explanation about special permissions/advanced settings:
-advanced_expl_div= $('<div id="permdialog_advanced_explantion_text">For special permissions or advanced settings, click Advanced. </div>')
+advanced_expl_div= $('<div id="permdialog_advanced_explantion_text">For special or additional permissions, click Advanced. </div>')
+
+
 
 // Make the (grouped) permission checkboxes table:
 grouped_permissions = define_grouped_permission_checkboxes('permdialog_grouped_permissions')
@@ -50,7 +65,7 @@ file_permission_users.css({
 })
 
 // Make button to add a new user to the list:
-perm_add_user_select = define_new_user_select_field('perm_add_user', 'Add...', on_user_change = function(selected_user){
+perm_add_user_select = define_new_user_select_field('perm_add_user', 'Add New User Profile', on_user_change = function(selected_user){
     // console.log("add...")
     let filepath = perm_dialog.attr('filepath')
     if(selected_user && (selected_user.length > 0) && (selected_user in all_users)) { // sanity check that a user is actually selected (and exists)
