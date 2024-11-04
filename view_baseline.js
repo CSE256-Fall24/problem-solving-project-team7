@@ -19,7 +19,7 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
             }
         },
         Apply: {
-            text: "Confirm Changes",
+            text: "Apply",
             id: "perm-dialog-ok-button",
             click: function() {
                 $( this ).dialog( "close" );
@@ -45,9 +45,9 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
 
 obj_name_div = $('<div id="permdialog_objname" class="section">Object Name: <span id="permdialog_objname_namespan"></span> </div>')
 
-deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text">Select deny to restrict selected user permission only in this file </div>')
+deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text" style="color:blue;"> <small>Select deny to restrict selected user permission only in this file </small> </div>')
 //Make the div with the explanation about special permissions/advanced settings:
-advanced_expl_div= $('<div id="permdialog_advanced_explantion_text">For special or additional permissions, click Advanced. </div>')
+advanced_expl_div= $('<div id="permdialog_advanced_explantion_text" style="color:blue;"> <small> For special permissions or change on inheritance, click Advanced. </small></div>')
 
 
 
