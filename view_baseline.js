@@ -43,7 +43,7 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
 // If you pass in valid HTML to $(), it will *create* elements instead of selecting them. (You still have to append them, though)
 
 
-obj_name_div = $('<div id="permdialog_objname" class="section">Object Name: <span id="permdialog_objname_namespan"></span> </div>')
+obj_name_div = $('<div id="permdialog_objname" class="section"> </span> </div>')
 
 deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text" style="color:blue;"> <small>Select deny to restrict selected user permission only in this file </small> </div>')
 //Make the div with the explanation about special permissions/advanced settings:
