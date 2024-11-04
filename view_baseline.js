@@ -5,28 +5,24 @@ show_starter_dialogs = false // set this to "false" to disable the survey and 3-
 
 // --- Create all the elements, and connect them as needed: ---
 // Make permissions dialog:
+
 perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
     // The following are standard jquery-ui options. See https://jqueryui.com/dialog/
     height: 500,
     width: 400,
     buttons: {
-<<<<<<< HEAD
-        OK:{
-            text: "Advanced change",
-=======
-        Apply:{
-            text: "Apply",
->>>>>>> 7ead15ce4090cb4eb18304828f64c38c01ffa791
-            id: "perm-dialog-ok-button",
-            click: function() {
-                $( this ).dialog( "close" );
-            }
-        },
         Advanced: {
-            text: "Apply",
+            text: "Advanced change",
             id: "perm-dialog-advanced-button",
             click: function() {
                 open_advanced_dialog(perm_dialog.attr('filepath'))
+            }
+        },
+        Apply: {
+            text: "Apply",
+            id: "perm-dialog-ok-button",
+            click: function() {
+                $( this ).dialog( "close" );
             }
         }
     }
@@ -36,8 +32,9 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
 // If you pass in valid HTML to $(), it will *create* elements instead of selecting them. (You still have to append them, though)
 obj_name_div = $('<div id="permdialog_objname" class="section">Object Name: <span id="permdialog_objname_namespan"></span> </div>')
 
+deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text">Selet deny to restrict selected user permission only in this file </div>')
 //Make the div with the explanation about special permissions/advanced settings:
-advanced_expl_div = $('<div id="permdialog_advanced_explantion_text">For special permissions or advanced settings, click Advanced.</div>')
+advanced_expl_div= $('<div id="permdialog_advanced_explantion_text">For special permissions or advanced settings, click Advanced. </div>')
 
 // Make the (grouped) permission checkboxes table:
 grouped_permissions = define_grouped_permission_checkboxes('permdialog_grouped_permissions')
@@ -151,11 +148,12 @@ perm_remove_user_button.click(function(){
 
 // --- Append all the elements to the permissions dialog in the right order: --- 
 perm_dialog.append(obj_name_div)
-perm_dialog.append($('<div id="permissions_user_title">Group or user names:</div>'))
+perm_dialog.append($('<div id="permissions_user_title">Select a group or user names:</div>'))
 perm_dialog.append(file_permission_users)
 perm_dialog.append(perm_add_user_select)
 perm_add_user_select.append(perm_remove_user_button) // Cheating a bit again - add the remove button the the 'add user select' div, just so it shows up on the same line.
 perm_dialog.append(grouped_permissions)
+perm_dialog.append(deny_expl_div)
 perm_dialog.append(advanced_expl_div)
 
 // --- Additional logic for reloading contents when needed: ---
@@ -390,9 +388,9 @@ $('#adv_perm_inheritance').change(function(){
         // has just been turned off - pop up dialog with add/remove/cancel
         $(`<div id="add_remove_cancel" title="Security">
             Warning: if you proceed, inheritable permissions will no longer propagate to this object.<br/>
+            This file will not able to inherited any change from other file<br/>
             - Click Add to convert and add inherited parent permissions as explicit permissions on this object<br/>
             - Click Remove to remove inherited parent permissions from this object<br/>
-            - Click Cancel if you do not want to modify inheritance settings at this time.<br/>
         </div>`).dialog({ // TODO: don't create this dialog on the fly
             modal: true,
             width: 400,
@@ -593,6 +591,23 @@ perm_entry_user_observer = new MutationObserver(function(mutationsList, observer
                     let checkbox = $(`<input type="checkbox" id="${cell_id}_checkbox" class="perm_entry_checkbox"></input>`)
                     $(this).append(checkbox)
                 })
+              $('#perm_entry_table').find('.perm_entry_checkcell').each(function() {
+                        let allowCheckbox = $(this).find("input[ptype='allow']");
+                        let denyCheckbox = $(this).find("input[ptype='deny']");
+                
+                        // Check if Allow or Deny checkbox is checked, and enforce exclusivity
+                        allowCheckbox.change(function() {
+                            if (this.checked) {
+                                denyCheckbox.prop('checked', false); // Uncheck Deny when Allow is checked
+                            }
+                        });
+                
+                        denyCheckbox.change(function() {
+                            if (this.checked) {
+                                allowCheckbox.prop('checked', false); // Uncheck Allow when Deny is checked
+                            }
+                        });
+                    });
 
                 let all_perms = get_total_permissions(file_obj,$('#perm_entry_username').attr('selected_user'))
                 for(let ace_type in all_perms) {
