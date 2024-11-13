@@ -48,6 +48,34 @@ function make_user_elem(id_prefix, uname, user_attributes=null) {
 }
 
 
+function define_modal_dialog(id_prefix, title, content, on_apply = function(){}) {
+    let modal = define_new_dialog(id_prefix, title, {
+        buttons: {
+            Cancel: {
+                text: "Cancel",
+                id: `${id_prefix}_cancel_button`,
+                click: function() {
+                    $(this).dialog("close");
+                }
+            },
+            Apply: {
+                text: "Apply", 
+                id: `${id_prefix}_apply_button`,
+                click: function() {
+                    on_apply();
+                    $(this).dialog("close");
+                }
+            }
+        }
+    });
+
+    // Add content to modal body
+    modal.html(content);
+
+    return modal;
+}
+
+
 // make a list of users, suitable for inserting into a select list, given a map of user name to some arbitrary info.
 // optionally, adds all the properties listed for a given user as attributes for that user's element.
 function make_user_list(id_prefix, usermap, add_attributes = false) {
@@ -484,6 +512,27 @@ user_select_dialog = define_new_dialog('user_select_dialog2', 'Select User', {
                 // console.log("selected item " + selected_value);
                 $(`#${to_populate_id}`).attr('selected_user', selected_value) // populate the element with the id
                 $( this ).dialog( "close" );
+
+                // Create permission checkboxes
+                let perm_checkboxes = define_grouped_permission_checkboxes('post_add_user_perms')
+                let filepath = perm_dialog.attr('filepath')
+                // Set the username and filepath attributes
+                perm_checkboxes.attr('username', selected_value)
+                perm_checkboxes.attr('filepath', filepath)
+                console.log("Checkbox: ", perm_checkboxes)
+                // Create modal dialog with permission checkboxes included in content
+                let modal = define_modal_dialog('post_add_user', 'User Added', 
+                    `<div>
+                        <p>Apply permissions for ${selected_value}?</p>
+                        <div id="post_add_user_perms_container"></div>
+                    </div>`, 
+                    function() {
+                    }
+                );
+                
+                // Add permission checkboxes to the container div inside the modal
+                modal.find('#post_add_user_perms_container').append(perm_checkboxes)
+                modal.dialog('open');
             }
         }
     }
