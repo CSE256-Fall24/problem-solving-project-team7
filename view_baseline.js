@@ -95,7 +95,7 @@ cant_remove_dialog = define_new_dialog('cant_remove_inherited_dialog', 'Security
 })
 cant_remove_dialog.html(`
 <div id="cant_remove_text">
-    To remove <span id="cant_remove_username_2" class = "cant_remove_username"></span>, go to "Advanced change" unclick "Users inherite permissions from the parent file'
+    Go to "Advanced change" unclick "Users inherite permissions from parent file'
     under the permission box.<br/>
     Then try removing <span id="cant_remove_username_3" class = "cant_remove_username"></span> .
 </div>`)
