@@ -403,7 +403,6 @@ $('#adv_perm_inheritance').change(function(){
         // has just been turned off - pop up dialog with add/remove/cancel
         $(`<div id="add_remove_cancel" title="Security">
         Click Confirm to apply changes.<br/>
-        Click Remove to remove inherited parent permissions from this object.<br/>
         </div>`).dialog({ // TODO: don't create this dialog on the fly
             modal: true,
             width: 400,
@@ -422,19 +421,7 @@ $('#adv_perm_inheritance').change(function(){
                         $( this ).dialog( "close" );
                     },
                 },
-                Remove: {
-                    text: "Remove",
-                    id: "adv-inheritance-remove-button",
-                    click: function() {
-                        let filepath = $('#advdialog').attr('filepath')
-                        let file_obj = path_to_file[filepath]
-                        file_obj.using_permission_inheritance = false
-                        emitState()
-                        open_advanced_dialog(filepath) // reload/reopen 'advanced' dialog
-                        perm_dialog.attr('filepath', filepath) // force reload 'permissions' dialog
-                        $( this ).dialog( "close" );
-                    },
-                },
+                
                 Cancel: {
                     text: "Cancel",
                     id: "adv-inheritance-cancel-button",
