@@ -165,7 +165,7 @@ perm_remove_user_button.click(function(){
 perm_dialog.append(obj_name_div)
 perm_dialog.append($('<div id="permissions_user_title">Select a group or user names to make changes:</div>'))
 perm_dialog.append(file_permission_users)
-perm_dialog.append($('<div id="permissions_user_title"> REMOVE the user for them no longer able to ACCESS OR MAKE CHANGES to the file. </div>'))
+perm_dialog.append($('<div id="permissions_user_title"> REMOVE the user so them no longer can ACCESS OR MAKE CHANGES to the file. </div>'))
 perm_dialog.append($('<div id="permissions_user_title">  </div>'))
 perm_dialog.append($('<div id="permissions_user_title"> *Permission of a user is inherited from the group they are in </div>'))
 perm_dialog.append(perm_add_user_select)
