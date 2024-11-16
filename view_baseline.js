@@ -8,7 +8,7 @@ show_starter_dialogs = false // set this to "false" to disable the survey and 3-
 
 perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
     // The following are standard jquery-ui options. See https://jqueryui.com/dialog/
-    height: 500,
+    height: 600,
     width: 400,
     buttons: {
         Advanced: {
@@ -165,7 +165,9 @@ perm_remove_user_button.click(function(){
 perm_dialog.append(obj_name_div)
 perm_dialog.append($('<div id="permissions_user_title">Select a group or user names to make changes:</div>'))
 perm_dialog.append(file_permission_users)
-perm_dialog.append($('<div id="permissions_user_title"> *The permission of a user is inherited from the group they are a member of </div>'))
+perm_dialog.append($('<div id="permissions_user_title"> REMOVE the user for them no longer able to ACCESS OR MAKE CHANGES to the file. </div>'))
+perm_dialog.append($('<div id="permissions_user_title">  </div>'))
+perm_dialog.append($('<div id="permissions_user_title"> *Permission of a user is inherited from the group they are in </div>'))
 perm_dialog.append(perm_add_user_select)
 perm_add_user_select.append(perm_remove_user_button) // Cheating a bit again - add the remove button the the 'add user select' div, just so it shows up on the same line.
 perm_dialog.append(grouped_permissions)
