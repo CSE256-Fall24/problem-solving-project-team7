@@ -66,11 +66,13 @@ permission_groups = {
         permissions.APPEND_DATA,
         permissions.WRITE_ATTR,
         permissions.WRITE_EXTENDED_ATTR,
-        permissions.DELETE,
-        permissions.DELETE_SUB,
         permissions.READ_PERMS,
         permissions.CHANGE_PERMS,
         permissions.TAKE_OWNERSHIP,
+    ],
+    Delete: [
+        permissions.DELETE, 
+        permissions.DELETE_SUB
     ],
 };
 perm_groupnames = Object.keys(permission_groups);
