@@ -763,3 +763,4 @@ $('#survey-form').submit(function(){
     $('#survey-dialog').dialog( "close" );
     event.preventDefault();
 })
+

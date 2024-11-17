@@ -320,90 +320,100 @@ function define_grouped_permission_checkboxes(id_prefix, which_groups = null) {
 }
 
 // define an element which will display *individual* permissions for a given file and user, and allow for changing them by checking/unchecking the checkboxes.
-function define_permission_checkboxes(id_prefix, which_permissions = null){
+function define_permission_checkboxes(id_prefix, which_permissions = null) {
     // Set up table and header:
     let perm_table = $(`
     <table id="${id_prefix}" class="ui-widget-content" width="100%">
         <tr id="${id_prefix}_header">
-            <th id="${id_prefix}_header_p" width="99%">Permissions for <span id="${id_prefix}_header_username"></span>
-            </th>
+            <th id="${id_prefix}_header_p" width="99%">Permissions for <span id="${id_prefix}_header_username"></span></th>
             <th id="${id_prefix}_header_allow">Allow</th>
             <th id="${id_prefix}_header_deny">Deny</th>
         </tr>
     </table>
-    `)
+    `);
 
     // If no subset of permissions is passed in, use all of them.
-    if(which_permissions === null) {
-        which_permissions = Object.values(permissions)
+    if (which_permissions === null) {
+        which_permissions = Object.values(permissions);
     }
+
     // For each type of permission, create a row:
-    for(let p of which_permissions){
-        let p_id = p.replace(/[ \/]/g, '_') 
+    which_permissions.forEach(p => {
+        let p_id = p.replace(/[ \/]/g, '_'); // sanitize permission name
         let row = $(`<tr id="${id_prefix}_row_${p_id}">
             <td id="${id_prefix}_${p_id}_name">${p}</td>
-        </tr>`)
-        // Add allow and deny checkboxes:
-        for(let ace_type of ['allow', 'deny']) {
+        </tr>`);
+
+        // Add both allow and deny checkboxes in a single loop:
+        ['allow', 'deny'].forEach(ace_type => {
             row.append(`<td id="${id_prefix}_${p_id}_${ace_type}_cell">
-                <input type="checkbox" id="${id_prefix}_${p_id}_${ace_type}_checkbox" ptype="${ace_type}" class="perm_checkbox" permission="${p}" ></input>
-            </td>`)
-        }
-        perm_table.append(row)
-    }
+                <input type="checkbox" id="${id_prefix}_${p_id}_${ace_type}_checkbox" ptype="${ace_type}" class="perm_checkbox" permission="${p}" />
+            </td>`);
+        });
 
-    perm_table.find('.perm_checkbox').prop('disabled', true)// disable all checkboxes to start
+        perm_table.append(row); // Add the row to the table
+    });
 
-    let update_perm_table = function(){
+    // Disable all checkboxes to start
+    perm_table.find('.perm_checkbox').prop('disabled', true);
 
-        // get current settings:
-        let username = perm_table.attr('username')
-        let filepath = perm_table.attr('filepath')
-        // if both properties are set correctly:
-        if( username && username.length > 0 && (username in all_users) &&
+    // Function to update the permission table based on username and filepath
+    let update_perm_table = function () {
+        let username = perm_table.attr('username');
+        let filepath = perm_table.attr('filepath');
+
+        // If both properties are set correctly:
+        if (username && username.length > 0 && (username in all_users) &&
             filepath && filepath.length > 0 && (filepath in path_to_file)) {
             
-            // clear previous checkbox state:
-            perm_table.find('.perm_checkbox').prop('disabled', false)
-            perm_table.find('.perm_checkbox').prop('checked', false)
+            // Clear previous checkbox state:
+            perm_table.find('.perm_checkbox').prop('disabled', false).prop('checked', false);
 
-            //change name on table:
-            $(`#${id_prefix}_header_username`).text(username)
+            // Change the name on the table:
+            $(`#${id_prefix}_header_username`).text(username);
 
             // Get permissions:
-            let all_perms = get_total_permissions(path_to_file[filepath], username)
-            for( ace_type in all_perms) { // 'allow' and 'deny'
-                for(allowed_perm in all_perms[ace_type]) {
-                    let p_id = allowed_perm.replace(/[ \/]/g, '_') 
-                    let checkbox = perm_table.find(`#${id_prefix}_${p_id}_${ace_type}_checkbox`)
-                    checkbox.prop('checked', true)
-                    if(all_perms[ace_type][allowed_perm].inherited) {
-                        // can't uncheck inherited permissions.
-                        checkbox.prop('disabled', true)
+            let all_perms = get_total_permissions(path_to_file[filepath], username);
+            
+            for (let ace_type in all_perms) { // 'allow' and 'deny'
+                for (let allowed_perm in all_perms[ace_type]) {
+                    let p_id = allowed_perm.replace(/[ \/]/g, '_'); 
+                    let checkbox = perm_table.find(`#${id_prefix}_${p_id}_${ace_type}_checkbox`);
+                    checkbox.prop('checked', true);
+                    
+                    // Disable checkbox if inherited permission
+                    if (all_perms[ace_type][allowed_perm].inherited) {
+                        checkbox.prop('disabled', true);
                     }
                 }
             }
+        } else {
+            // Reset everything if username or filepath is invalid
+            perm_table.find('.perm_checkbox').prop('disabled', true).prop('checked', false);
+            $(`#${id_prefix}_header_username`).text('');
         }
-        else {
-            // can't get permissions for this username/filepath - reset everything into a blank state
-            perm_table.find('.perm_checkbox').prop('disabled', true)
-            perm_table.find('.perm_checkbox').prop('checked', false)
-            $(`#${id_prefix}_header_username`).text('')
-        }
-    }
+    };
 
-    define_attribute_observer(perm_table, 'username', update_perm_table)
-    define_attribute_observer(perm_table, 'filepath', update_perm_table)
+    // Set up observers to update the table when username or filepath changes
+    define_attribute_observer(perm_table, 'username', update_perm_table);
+    define_attribute_observer(perm_table, 'filepath', update_perm_table);
 
-    //Update permissions when checkbox is clicked:
-    perm_table.find('.perm_checkbox').change(function(){
-        console.log(perm_table.attr('filepath'), perm_table.attr('username'), $(this).attr('permission'), $(this).attr('ptype'), $(this).prop('checked'))
-        toggle_permission( perm_table.attr('filepath'), perm_table.attr('username'), $(this).attr('permission'), $(this).attr('ptype'), $(this).prop('checked'))
-        update_perm_table()// reload checkboxes
-    })
+    // Update permissions when checkbox is clicked:
+    perm_table.find('.perm_checkbox').change(function () {
+        console.log(perm_table.attr('filepath'), perm_table.attr('username'), $(this).attr('permission'), $(this).attr('ptype'), $(this).prop('checked'));
+        toggle_permission(
+            perm_table.attr('filepath'),
+            perm_table.attr('username'),
+            $(this).attr('permission'),
+            $(this).attr('ptype'),
+            $(this).prop('checked')
+        );
+        update_perm_table(); // Reload checkboxes after update
+    });
 
-    return perm_table
+    return perm_table;
 }
+
 
 // Define a list of permission groups for a given file, for all users
 function define_file_permission_groups_list(id_prefix){

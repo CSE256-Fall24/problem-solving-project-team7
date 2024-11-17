@@ -36,3 +36,14 @@
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }
+#adv_perm_inheritance, #adv_perm_replace_child_permissions {
+    transform: scale(1.5); /* Makes the checkbox larger */
+    margin-right: 10px; /* Adds space between checkbox and label */
+}
+
+/* Increase the font size of the label */
+#adv_perm_inheritance_label, #adv_perm_replace_child_permissions_label {
+    font-size: 19px; /* Adjusts label font size */
+    line-height: 1.5; /* Improves readability by adjusting line spacing */
+}
+
