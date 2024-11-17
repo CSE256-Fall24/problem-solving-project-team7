@@ -52,6 +52,12 @@ $('.folder').accordion({
     heightStyle: 'content'
 }) // TODO: start collapsed and check whether read permission exists before expanding?
 
+let permissionsTable = define_user_permissions_table()
+$('#sidepanel').append(permissionsTable)
+
+// Initialize the first user's permissions table
+let firstUser = Object.keys(all_users)[0]
+updatePermissionsTable(firstUser)
 
 // -- Connect File Structure lock buttons to the permission dialog --
 

@@ -23,6 +23,9 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
             id: "perm-dialog-ok-button",
             click: function() {
                 $( this ).dialog( "close" );
+                let activeTab = $('#user_tabs .ui-tabs-panel:visible');
+                let username = activeTab.attr('id').replace('user_tab_', '');
+                updatePermissionsTable(username);
             }
         }
         ,Permissions: {
@@ -32,7 +35,7 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
                 $("#advtabs").tabs("option", "active", 2); 
                 $("#advdialog").dialog('open')
                 open_advanced_dialog(perm_dialog.attr('filepath'))
-
+                
 
             }
         }
@@ -259,7 +262,7 @@ function open_advanced_dialog(file_path) {
         $('#adv_perm_inheritance').prop('checked', false)
     }
 
-
+    $('#adv_perm_table tr').remove();
 
     // permissions list for permissions tab:
     let users = get_file_users(file_obj)

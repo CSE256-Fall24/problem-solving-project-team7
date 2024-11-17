@@ -64,10 +64,12 @@ function define_modal_dialog(id_prefix, title, content, on_apply = function(){})
                 click: function() {
                     on_apply();
                     $(this).dialog("close");
+                    
                 }
             }
         }
     });
+
 
     // Add content to modal body
     modal.html(content);
@@ -436,7 +438,7 @@ function define_file_permission_groups_list(id_prefix){
 
             let file_obj = path_to_file[filepath]
             let users = get_file_users(file_obj)
-            
+
             let headerRow = `<tr>
             <th>User</th>`;
             let allPermissions = new Set();
@@ -600,12 +602,106 @@ function get_explanation_text(explanation) {
     `
 }
 
+
+function define_user_permissions_table() {
+    // Create container for tabs and table
+    let container = $('<div id="user_permissions_panel" style="margin-top: 20px;"></div>')
+    
+    // Create tabs container
+    let tabsContainer = $('<div id="user_tabs"></div>')
+    let tabsList = $('<ul></ul>')
+    
+    // Create tabs for each user
+    for (let username in all_users) {
+        tabsList.append(`<li><a href="#user_tab_${username}">${username}</a></li>`)
+        tabsContainer.append(`<div id="user_tab_${username}">
+            <table id="perm_table_${username}" class="ui-widget-content" width="100%">
+                <tr>
+                    <th>File Path</th>
+                    <th>Read</th>
+                    <th>Write_Data</th>
+                    <th>Delete_Files</th>
+                    <th>Delete</th>
+                </tr>
+            </table>
+        </div>`)
+    }
+    
+    tabsContainer.prepend(tabsList)
+    container.append(tabsContainer)
+
+    // Initialize jQuery UI tabs
+    tabsContainer.tabs({
+        activate: function(event, ui) {
+            let username = ui.newPanel.attr('id').replace('user_tab_', '')
+            updatePermissionsTable(username)
+        }
+    })
+
+    // Initialize the first tab's permissions
+    let firstUser = Object.keys(all_users)[0]
+    updatePermissionsTable(firstUser)
+
+    return container
+}
+
+function updatePermissionsTable(username) {
+    // Clear existing rows except header
+    $(`#perm_table_${username} tr:gt(0)`).remove()
+    
+    // Get all files in order they appear in file structure
+    let files = []
+    
+    // Modified traversal function to handle full hierarchy
+    function traverseFileStructure(file) {
+        if (!file) return
+        files.push(file)
+        
+        // Get path to check for children
+        let filePath = get_full_path(file)
+        if (filePath in parent_to_children) {
+            let children = parent_to_children[filePath]
+            children.forEach(child => traverseFileStructure(child))
+        }
+    }
+
+    // Start with root files
+    root_files.forEach(file => traverseFileStructure(file))
+
+    // Create table rows
+    files.forEach(file => {
+        let row = $('<tr></tr>')
+        row.append(`<td>${get_full_path(file)}</td>`)
+        
+        // Get grouped permissions for this file and user
+        let grouped_perms = get_grouped_permissions(file, username)
+        
+        // Add checkboxes for each permission type
+        let permissions = ['Read', 'Write_Data', 'Delete_Files', 'Delete']
+        permissions.forEach(perm => {
+            let isChecked = false
+            
+            // Check both allow and deny permissions
+            if (grouped_perms.allow && grouped_perms.allow[perm]) {
+                isChecked = true
+            }
+            if (grouped_perms.deny && grouped_perms.deny[perm]) {
+                isChecked = false
+            }
+            
+            row.append(`<td><input type="checkbox" ${isChecked ? 'checked' : ''} disabled></td>`)
+        })
+        
+        $(`#perm_table_${username}`).append(row)
+    })
+}
+
 //---- some universal HTML set-up so you don't have to do it in each wrapper.html ----
 $('#filestructure').css({
     'display':'inline-block',
     'width':'49%',
     'vertical-align': 'top'
 })
-$('#filestructure').after('<div id="sidepanel" style="display:inline-block;width:49%"></div>')
+$('#filestructure').after('<div id="sidepanel" style="display:inline-block;width:49%;padding:10px"></div>')
 
 
