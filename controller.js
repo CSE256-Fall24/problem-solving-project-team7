@@ -41,20 +41,18 @@ permission_groups = {
         permissions.WRITE_ATTR,
         permissions.WRITE_EXTENDED_ATTR,
     ],
-    Read_Execute: [
+    Traverse_Files: [
         permissions.LIST,
         permissions.READ_ATTR,
         permissions.READ_EXTENDED_ATTR,
         permissions.READ_PERMS,
         permissions.EXECUTE,
     ],
-    Modify: [
+    Modify_Data: [
         permissions.WRITE_DATA,
         permissions.APPEND_DATA,
         permissions.WRITE_ATTR,
         permissions.WRITE_EXTENDED_ATTR,
-        permissions.DELETE,
-        permissions.DELETE_SUB,
     ],
     Full_control: [
         permissions.LIST,
