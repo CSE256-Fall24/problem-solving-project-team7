@@ -35,25 +35,18 @@ permission_groups = {
         permissions.READ_EXTENDED_ATTR,
         permissions.READ_PERMS,
     ],
-    Write: [
+    Write_Data: [
         permissions.WRITE_DATA,
         permissions.APPEND_DATA,
         permissions.WRITE_ATTR,
         permissions.WRITE_EXTENDED_ATTR,
     ],
-    Traverse_Files: [
-        permissions.LIST,
-        permissions.READ_ATTR,
-        permissions.READ_EXTENDED_ATTR,
-        permissions.READ_PERMS,
-        permissions.EXECUTE,
+
+    Delete_Files: [
+        permissions.DELETE, 
+        permissions.DELETE_SUB
     ],
-    Modify_Data: [
-        permissions.WRITE_DATA,
-        permissions.APPEND_DATA,
-        permissions.WRITE_ATTR,
-        permissions.WRITE_EXTENDED_ATTR,
-    ],
+
     Full_control: [
         permissions.LIST,
         permissions.READ_ATTR,
@@ -68,10 +61,7 @@ permission_groups = {
         permissions.CHANGE_PERMS,
         permissions.TAKE_OWNERSHIP,
     ],
-    Delete: [
-        permissions.DELETE, 
-        permissions.DELETE_SUB
-    ],
+    
 };
 perm_groupnames = Object.keys(permission_groups);
 perm_groupnames.push('Special_permissions');

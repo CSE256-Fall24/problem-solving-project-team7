@@ -167,7 +167,7 @@ perm_dialog.append(file_permission_users)
 let addNewUserLine = $('<div id="permissions_user_add_new_user" style="color:blue;">If you don’t find the user you want to edit —> click “Add New User” and edit permission.</div>');
 perm_dialog.append(addNewUserLine);  // Insert the new line
 
-perm_dialog.append($('<div id="permissions_user_title"> HINT: if user cannot modify a file but all seetings look right, go to Advanced change --> edit --> the group they belong to --> see if there are any permissions being denied. </div>'))
+perm_dialog.append($('<div id="permissions_user_title"> HINT: if a user cannot modify a file, check the permissions for the group they belong to </div>'))
 
 perm_dialog.append(perm_add_user_select)
 perm_add_user_select.append(perm_remove_user_button) // Cheating a bit again - add the remove button the the 'add user select' div, just so it shows up on the same line.
