@@ -536,6 +536,7 @@ user_select_dialog = define_new_dialog('user_select_dialog2', 'Select User', {
                 let modal = define_modal_dialog('post_add_user', 'User Added', 
                     `<div>
                         <p>Apply permissions for ${selected_value}?</p>
+                        <p>**Allow all to give full permissions**</p>
                         <div id="post_add_user_perms_container"></div>
                     </div>`, 
                     function() {
