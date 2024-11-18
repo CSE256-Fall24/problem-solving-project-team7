@@ -168,7 +168,7 @@ perm_dialog.append($('<div id="permissions_user_title"> HINT: if a user cannot m
 
 perm_dialog.append(perm_add_user_select)
 perm_add_user_select.append(perm_remove_user_button) // Cheating a bit again - add the remove button the the 'add user select' div, just so it shows up on the same line.
-perm_dialog.append(`
+/*perm_dialog.append(`
     <div id="checkbox_header" style="font-size: 16px; font-weight: bold; margin-bottom: 10px;">
         Inheritance Permissions
     </div>
@@ -183,7 +183,7 @@ perm_dialog.append(`
         </label>
     </div>
     <div></div>
-`);
+`);*/
 
 perm_dialog.append(grouped_permissions)
 perm_dialog.append(deny_expl_div)
