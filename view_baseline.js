@@ -28,17 +28,6 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
                 updatePermissionsTable(username);
             }
         }
-        ,Permissions: {
-            text: "View All Current Permissions",
-            id: "perm-dialog-view-button",
-            click: function() {
-                $("#advtabs").tabs("option", "active", 2); 
-                $("#advdialog").dialog('open')
-                open_advanced_dialog(perm_dialog.attr('filepath'))
-                
-
-            }
-        }
     }
 })
 
