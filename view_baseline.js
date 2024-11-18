@@ -37,7 +37,7 @@ perm_dialog = define_new_dialog('permdialog', title='Permissions', options = {
 
 obj_name_div = $('<div id="permdialog_objname" class="section"> </span> </div>')
 
-deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text" style="color:blue;"> Select deny to override current file permissions  </div>')
+deny_expl_div = $('<div id="div id="permdialog_deny_explanation_text" style="color:blue;">  </div>')
 //Make the div with the explanation about special permissions/advanced settings:
 advanced_expl_div= $('<div id="permdialog_advanced_explantion_text" style="color:blue;"> <small>  </small></div>')
 
@@ -160,10 +160,10 @@ perm_remove_user_button.click(function(){
 perm_dialog.append(obj_name_div)
 perm_dialog.append($('<div id="permissions_user_title">Select a group or user names to make changes:</div>'))
 perm_dialog.append(file_permission_users)
-let addNewUserLine = $('<div id="permissions_user_add_new_user" style="color:blue;">If you don’t find the user you want to edit —> click “Add New User” and edit permission.</div>');
-perm_dialog.append(addNewUserLine);  // Insert the new line
+// let addNewUserLine = $('<div id="permissions_user_add_new_user" style="color:blue;">If you don’t find the user you want to edit —> click “Add New User” and edit permission.</div>');
+// perm_dialog.append(addNewUserLine);  // Insert the new line
 
-perm_dialog.append($('<div id="permissions_user_title"> HINT: if a user cannot modify a file, check the permissions for the group they belong </div>'))
+//perm_dialog.append($('<div id="permissions_user_title"> HINT: if a user cannot modify a file, check the permissions for the group they belong </div>'))
 
 
 perm_dialog.append(perm_add_user_select)
