@@ -344,6 +344,7 @@ function replace_child_perm_with_inherited(file_obj) {
 
 //Add a group of permissions for given file path and user name
 function toggle_permission_group(filepath, username, group, type, is_on) {
+    console.log(filepath, username, group, type, is_on)
     // Sanity check - the file object and user exist.
     if (!(filepath in path_to_file) || !(username in all_users)) return false;
 
@@ -368,8 +369,10 @@ function toggle_permission(filepath, username, permission, type, is_on) {
     let is_allow_ace = type === 'allow';
 
     if (is_on) {
+        console.log(permission)
         add_permissons(file_obj, user, [permission], is_allow_ace);
     } else {
+        console.log(permission)
         remove_permissions(file_obj, user, [permission], is_allow_ace);
     }
 }

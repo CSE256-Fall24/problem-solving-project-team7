@@ -608,6 +608,8 @@ function define_user_permissions_table() {
     // Create container for tabs and table
     let container = $('<div id="user_permissions_panel" style="margin-top: 20px;"></div>')
     
+    container.append('<h2 style="margin-bottom: 15px;">File Permissions</h2>')
+    
     // Create tabs container
     let tabsContainer = $('<div id="user_tabs"></div>')
     let tabsList = $('<ul></ul>')
@@ -625,25 +627,75 @@ function define_user_permissions_table() {
                     <th>Delete</th>
                 </tr>
             </table>
+            <div style="text-align: right; margin-top: 10px;">
+                <button id="apply_${username}" class="ui-button ui-widget ui-corner-all">Apply Changes</button>
+            </div>
         </div>`)
     }
+
+    // Add change handler for checkboxes using event delegation
+    $(document).on('change', '#user_tabs input[type="checkbox"]', function() {
+        $(this).addClass('changed');
+        console.log('Checkbox changed:', $(this));
+    });
+
+    // Add click handler for the apply buttons using event delegation
+    // Add click handler for the apply buttons using event delegation
+    // Add click handler for the apply buttons using event delegation
+    $(document).on('click', '[id^="apply_"]', function() {
+        let username = this.id.replace('apply_', '');
+        let changedPermissions = $(`#perm_table_${username} input[type="checkbox"].changed`);
+        
+        changedPermissions.each(function() {
+            let checkbox = $(this);
+            let row = checkbox.closest('tr');
+            let filePath = row.find('td:first').text();
+            let file_obj = path_to_file[filePath];
+            
+            if (!file_obj) return;
+            
+            // Get the permission group based on column index
+            let permType = checkbox.closest('td').index() - 1;
+            let permissionGroups = ['Read', 'Write_Data', 'Delete_Files', 'Delete'];
+            let group = permissionGroups[permType];
+            
+            console.log('Toggling permission group:', {
+                filePath,
+                username,
+                group: group,
+                type: 'allow',
+                value: checkbox.prop('checked')
+            });
+            
+            // Update the permission group
+            toggle_permission_group(
+                filePath,
+                username,
+                group,
+                'allow',
+                checkbox.prop('checked')
+            );
+        });
+        
+        // Remove changed class from all checkboxes
+        changedPermissions.removeClass('changed');
+        
+        // Refresh the table to show updated permissions
+        updatePermissionsTable(username);
+    });
     
-    tabsContainer.prepend(tabsList)
-    container.append(tabsContainer)
+    tabsContainer.prepend(tabsList);
+    container.append(tabsContainer);
 
     // Initialize jQuery UI tabs
     tabsContainer.tabs({
         activate: function(event, ui) {
-            let username = ui.newPanel.attr('id').replace('user_tab_', '')
-            updatePermissionsTable(username)
+            let username = ui.newPanel.attr('id').replace('user_tab_', '');
+            updatePermissionsTable(username);
         }
-    })
+    });
 
-    // Initialize the first tab's permissions
-    let firstUser = Object.keys(all_users)[0]
-    updatePermissionsTable(firstUser)
-
-    return container
+    return container;
 }
 
 function updatePermissionsTable(username) {
@@ -689,8 +741,15 @@ function updatePermissionsTable(username) {
             if (grouped_perms.deny && grouped_perms.deny[perm]) {
                 isChecked = false
             }
+
+            let checkbox = $(`<input type="checkbox" ${isChecked ? 'checked' : ''}>`)
+            checkbox.on('change', function() {
+                $(this).addClass('changed') // Mark this checkbox as changed
+            })
             
-            row.append(`<td><input type="checkbox" ${isChecked ? 'checked' : ''} disabled></td>`)
+            let cell = $('<td></td>').append(checkbox)
+            
+            row.append(cell)
         })
         
         $(`#perm_table_${username}`).append(row)
