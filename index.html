@@ -229,7 +229,99 @@
         $("#permdialog_grouped_permissions_Full_control_name").hover(
             function() {
                 // Create the tooltip element
-                let tooltip = $('<div id="tooltip">This have the ability to change permissions</div>');
+                let tooltip = $('<div id="tooltip">Allow/Deny Full Access at once</div>');
+                tooltip.css({
+                    position: 'absolute',
+                    padding: '5px',
+                    backgroundColor: '#EDECEC',
+                    color: '#333',
+                    borderRadius: '3px',
+                    fontSize: '12px',
+                    zIndex: 1000
+                });
+                
+                // Append tooltip to the body
+                $("body").append(tooltip);
+
+                // Position the tooltip above the hovered element
+                let offset = $(this).offset();
+                tooltip.css({
+                    top: offset.top - tooltip.outerHeight() - 10,  // Adjust the tooltip to appear above the element
+                    left: offset.left
+                });
+            },
+            function() {
+                // Remove the tooltip when the mouse leaves
+                $("#tooltip").remove();
+            }
+        ); // hovering tooltip for task 3
+
+        $("#permdialog_grouped_permissions_Delete_Files_name").hover(
+            function() {
+                // Create the tooltip element
+                let tooltip = $('<div id="tooltip">Makes Changes: Deletes Files </div>');
+                tooltip.css({
+                    position: 'absolute',
+                    padding: '5px',
+                    backgroundColor: '#EDECEC',
+                    color: '#333',
+                    borderRadius: '3px',
+                    fontSize: '12px',
+                    zIndex: 1000
+                });
+                
+                // Append tooltip to the body
+                $("body").append(tooltip);
+
+                // Position the tooltip above the hovered element
+                let offset = $(this).offset();
+                tooltip.css({
+                    top: offset.top - tooltip.outerHeight() - 10,  // Adjust the tooltip to appear above the element
+                    left: offset.left
+                });
+            },
+            function() {
+                // Remove the tooltip when the mouse leaves
+                $("#tooltip").remove();
+            }
+        ); // hovering tooltip for task 3
+
+
+        $("#permdialog_grouped_permissions_Write_Data_name").hover(
+            function() {
+                // Create the tooltip element
+                let tooltip = $('<div id="tooltip">Makes Changes: Write on Files </div>');
+                tooltip.css({
+                    position: 'absolute',
+                    padding: '5px',
+                    backgroundColor: '#EDECEC',
+                    color: '#333',
+                    borderRadius: '3px',
+                    fontSize: '12px',
+                    zIndex: 1000
+                });
+                
+                // Append tooltip to the body
+                $("body").append(tooltip);
+
+                // Position the tooltip above the hovered element
+                let offset = $(this).offset();
+                tooltip.css({
+                    top: offset.top - tooltip.outerHeight() - 10,  // Adjust the tooltip to appear above the element
+                    left: offset.left
+                });
+            },
+            function() {
+                // Remove the tooltip when the mouse leaves
+                $("#tooltip").remove();
+            }
+        ); // hovering tooltip for task 3
+
+
+        $("#permdialog_grouped_permissions_Read_name").hover(
+            function() {
+                // Create the tooltip element
+                let tooltip = $('<div id="tooltip">Access: Read the Files </div>');
                 tooltip.css({
                     position: 'absolute',
                     padding: '5px',
