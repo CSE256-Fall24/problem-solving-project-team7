@@ -363,7 +363,7 @@
                 '<br>'+
                 '<p>- If you don\’t find the user you want to edit —> click “Add New User” and edit permission.<p>' +
                 '<br>' +
-                '<p> - If you want to change permission for a user in a <b>group</b> —> click "Add New User" modify for specific permission</p>' +
+                '<p> - If you want to change permission for a user in a <b>group</b> (that is not shown as an individual user)—> click "Add New User" to add the user first to modify for specific permission</p>' +
                 '<br>' +
                 '<p> - If a user cannot modify a file, check the permissions for the group they belong</p>'+
                 '<br>'+
@@ -396,8 +396,23 @@
             });
 
             // Create and append the new "Help" button after #ui-id-2
-            let helpButton = $('<button id="new-help-btn" style="background-color: #3E8BEF; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Help</button>');
-            $('#ui-id-2').after(helpButton);
+            let helpButton = $(
+    '<button id="new-help-btn" style="background-color: #007BFF; color: #fff; border: none; font-size: 16px; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 10px; font-weight: bold;">Help</button>'
+);
+
+// Insert the button after the element with id "ui-id-2"
+$('#ui-id-2').after(helpButton);
+
+// Optional: Add a hover effect to visually indicate interactivity
+helpButton.hover(
+    function() {
+        $(this).css("background-color", "#0056b3");
+    },
+    function() {
+        $(this).css("background-color", "#007BFF");
+    }
+);
+
 
             // Show the dialog when clicking the new "Help" button
             $('#new-help-btn').click(function() {
