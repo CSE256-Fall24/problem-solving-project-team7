@@ -356,17 +356,16 @@
         $(document).ready(function() {
             // Create the instruction dialog element with detailed content
             let dialog = $('<div id="instruction-dialog" title="Instructions">' +
-                '<h2>This might be helpful!!</h2>' + 
+                '<h2>This might be helpful!</h2>' + 
                 '<p style="opacity: 0.5; font-size: 14px;" >(click "Help" to reopen this page)</p>'+
+                '<br>'+
+                '<p> - When editing the permission for users, if you do not find the user, see "Add New User".</p>'+
                 '<br>'+
                 '<p> - <b>"Deny"</b> will allow you to override an inherited permission.</p>'+
                 '<br>'+
-                '<p>- If you don\’t find the user you want to edit —> click “Add New User” and edit permission.<p>' +
-                '<br>' +
                 '<p> - If you want to change permission for a user in a <b>group</b> (that is not shown as an individual user)—> click "Add New User" to add the user first to modify for specific permission</p>' +
                 '<br>' +
-                '<p> - If a user cannot modify a file, check the permissions for the group they belong</p>'+
-                '<br>'+
+                
                 
                 '</div>');
             

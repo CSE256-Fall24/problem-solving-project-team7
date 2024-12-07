@@ -159,7 +159,8 @@ perm_remove_user_button.click(function(){
 
 perm_dialog.append(obj_name_div)
 perm_dialog.append($('<div id="permissions_user_title" style="font-size:24px; font-weight:bold;">STEP 1</div>'));
-perm_dialog.append($('<div id="permissions_user_title">Choose a group or user to view or edit their permissions (if you do not find the user, see "Add New User")</div>'))
+perm_dialog.append($('<div id="permissions_user_title">Choose a group or user to view or edit their permissions </div>'))
+perm_dialog.append($('<div id="permissions_user_title">(Hint: If a user cannot modify, check thier group. e.g. if "teaching_assistant" cannot access, check permissions for "students")</div>'))
 perm_dialog.append(file_permission_users)
 // let addNewUserLine = $('<div id="permissions_user_add_new_user" style="color:blue;">If you don’t find the user you want to edit —> click “Add New User” and edit permission.</div>');
 // perm_dialog.append(addNewUserLine);  // Insert the new line
@@ -187,7 +188,7 @@ perm_add_user_select.append(perm_remove_user_button) // Cheating a bit again - a
 `);*/
 perm_dialog.append($('<div id="permissions_user_title" style="font-size:24px; font-weight:bold;">STEP 2</div>'));
 perm_dialog.append($('<div id="permissions_user_title">View and make permission changes below</div>'))
-perm_dialog.append($('<div id="permissions_user_title">* If you are editing a file in a folder, unclick ALLOW and click DENY to take away access for a user*</div>'))
+perm_dialog.append($('<div id="permissions_user_title">*To take away access for a user, unclick ALLOW and click DENY *</div>'))
 perm_dialog.append($('<div id="permissions_user_title">Hover over each permission to see specifics</div>'))
 
 
