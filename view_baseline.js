@@ -160,7 +160,7 @@ perm_remove_user_button.click(function(){
 perm_dialog.append(obj_name_div)
 perm_dialog.append($('<div id="permissions_user_title" style="font-size:24px; font-weight:bold;">STEP 1</div>'));
 perm_dialog.append($('<div id="permissions_user_title">Choose a group or user to view or edit their permissions </div>'))
-perm_dialog.append($('<div id="permissions_user_title">(Hint: If a user cannot modify, check thier group. e.g. if "teaching_assistant" cannot access, check permissions for "students")</div>'))
+perm_dialog.append($('<div id="permissions_user_title">(Hint: If you cannot modify the permission for a user, go to the GROUP they are in. e.g. if you cannot edit "teaching_assistant", check permissions for "students")</div>'))
 perm_dialog.append(file_permission_users)
 // let addNewUserLine = $('<div id="permissions_user_add_new_user" style="color:blue;">If you don’t find the user you want to edit —> click “Add New User” and edit permission.</div>');
 // perm_dialog.append(addNewUserLine);  // Insert the new line
